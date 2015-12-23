@@ -1,0 +1,36 @@
+@charset "UTF-8";
+/*░░░░░░░░░░░░░░░░░░░░░░░░
+
+  STYLE DIRECTORY
+
+    _
+
+  ░░░░░░░░░░░░░░░░░░░░░░░░*/
+div.magic8 {
+  position: relative;
+  overflow: visible; }
+  div.magic8.open input.magic8 {
+    border-bottom: none;
+    border-color: #09BCD3; }
+  div.magic8.open ul.magic8 {
+    display: block; }
+  div.magic8 ul.magic8 {
+    display: none;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    z-index: 5;
+    background-color: #ffffff;
+    border-right: solid 1px #09BCD3;
+    border-bottom: solid 1px #09BCD3;
+    border-left: solid 1px #09BCD3;
+    box-sizing: border-box;
+    list-style-type: none; }
+    div.magic8 ul.magic8 li {
+      display: none;
+      padding: 15px; }
+      div.magic8 ul.magic8 li.hovered {
+        background-color: #F8F9F9;
+        cursor: pointer; }
+      div.magic8 ul.magic8 li.show {
+        display: block; }

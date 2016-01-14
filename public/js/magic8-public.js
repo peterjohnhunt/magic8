@@ -63,6 +63,7 @@
 							$input.val($(this).text());
 							$wrapper.removeClass('open');
 							$options.removeClass('hovered');
+							$input.trigger('change');
 						});
 						checkText();
 					}
@@ -80,8 +81,8 @@
 			$options.removeClass('hovered');
 		});
 
-		$input.on('change keyup paste',function(e){
-			if (e.keyCode !== 13) {
+		$input.on('keyup paste',function(e){
+			if (e.keyCode !== 13 && e.keyCode !== 27) {
 				if( !$wrapper.hasClass('open') ){
 					$wrapper.addClass('open');
 				}
@@ -95,6 +96,11 @@
 					if ( $options.hasClass('hovered') ) {
 						$input.val($options.filter('.hovered').text());
 					}
+					$wrapper.removeClass('open');
+					$options.removeClass('hovered');
+					$input.trigger('change');
+					e.preventDefault();
+				} else if (e.keyCode === 27) {
 					$wrapper.removeClass('open');
 					$options.removeClass('hovered');
 					e.preventDefault();

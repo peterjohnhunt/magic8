@@ -11,12 +11,12 @@
 	var $allInputs 			= $('.magic8 input, input.magic8');
 
 	$allInputs.each(function() {
-		var $input   = $(this),
-			$wrapper = $input.parent(),
-			$holder = $wrapper.find('ul.magic8'),
-			$options = $holder.find('li'),
+		var $input     = $(this),
+			$wrapper   = $input.parent(),
+			$holder    = $wrapper.find('ul.magic8'),
+			$options   = $holder.find('li'),
 			$ancestors = $input.parents('.magic8'),
-			name = $ancestors.attr('id');
+			name       = $ancestors.attr('id');
 
 		$ancestors.removeClass('magic8');
 		$wrapper.addClass('magic8');
@@ -56,20 +56,19 @@
 						$options.hover(function(){
 							$options.removeClass('hovered');
 							$(this).addClass('hovered');
-						},function(){
-							// $(this).removeClass('hovered');
 						});
 						$options.click('click', function(){
 							$input.val($(this).text());
 							$wrapper.removeClass('open');
 							$options.removeClass('hovered');
 							$input.trigger('change');
+							validateOptions();
 						});
-						checkText();
+						showOptions();
 					}
 				});
 			} else {
-				checkText();
+				showOptions();
 			}
 		});
 
@@ -86,7 +85,8 @@
 				if( !$wrapper.hasClass('open') ){
 					$wrapper.addClass('open');
 				}
-				checkText();
+				showOptions();
+				validateOptions();
 			}
 	    });
 
@@ -95,6 +95,7 @@
 				if (e.keyCode === 13) {
 					if ( $options.hasClass('hovered') ) {
 						$input.val($options.filter('.hovered').text());
+						validateOptions();
 					}
 					$wrapper.removeClass('open');
 					$options.removeClass('hovered');
@@ -124,7 +125,7 @@
 			}
 		});
 
-		function checkText(){
+		function showOptions(){
 			$options.each(function() {
 				var optionText = $(this).text().toLowerCase(),
 					inputText = $input.val().toLowerCase();
@@ -134,6 +135,24 @@
 	                $(this).removeClass('show');
 	            }
 	        });
+		}
+
+		function validateOptions(){
+			var matched = false;
+			$options.each(function() {
+				var optionText = $(this).text().toLowerCase(),
+					inputText = $input.val().toLowerCase();
+
+				if( optionText === inputText){
+					matched = true;
+				}
+			});
+
+			if( matched ){
+				$input.trigger('magic8-match', [$input, $wrapper]);
+			} else {
+				$input.trigger('magic8-no-match', [$input, $wrapper]);
+			}
 		}
 	});
 
